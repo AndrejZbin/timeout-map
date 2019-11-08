@@ -1,16 +1,35 @@
 class TimeoutMap extends Map {
-    constructor(timeout, handler, margin=5000) {
+    constructor(iterable, options) {
         super();
         this._timeouts = {};
-        // how long until called
-        this._timeout = timeout;
-        // what is called
-        this._handler = handler;
-        // minimum time interval between timeouts
-        this._margin = margin;
+        this.configure(options, true);
+        for (const element of iterable) this.set(element[0], element[1]);
     }
-    set(key, value, timeout=this._timeout) {
-        this._set_timeout(key);
+    configure(options, reset=false) {
+        if (reset) {
+            this._config = {
+                // how long until called
+                timeout: null,
+                // delete key before callback?
+                autodelete: true,
+                // what is called
+                handler: () => {},
+                // minimum time interval between timeouts
+                margin: 0,
+                // additional arguments in callback
+                additional_arguments: [],
+            };
+        }
+        Object.assign(this._config, options);
+    }
+    set(key, value, options) {
+        if (!options) {
+            options = this._config;
+        }
+        else {
+            options = Object.assign(Object.assign({}, this._config), options);
+        }
+        this._set_timeout(key, options);
         return super.set(key, value);
     }
     delete(key) {
@@ -37,10 +56,19 @@ class TimeoutMap extends Map {
         }
         return false;
     }
-    _set_timeout(key, timeout) {
+    _set_timeout(key, config) {
         this._clear_timeout(key);
-        if (this._margin !== 0) timeout += this._margin - (timeout % this._margin);
-        this._timeouts[key] = setTimeout(() => this._handler(key, super.get(key)), timeout);
+        if (config.timeout == null || config.timeout === Infinity) return;
+
+        let timeout = config.timeout;
+        if (config.margin) timeout += config.margin - (timeout % config.margin);
+
+        this._timeouts[key] = setTimeout(() => {
+            let value = super.get(key);
+            if (config.autodelete) this.delete(key);
+            else this._clear_timeout(key);
+            config.handler(key, value, this, ...config.additional_arguments);
+        }, timeout);
     }
 }
 
