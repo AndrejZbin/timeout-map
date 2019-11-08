@@ -1,6 +1,6 @@
 {
   "name": "@gfxpulse/timeout-map",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Just like a normal Map, just with callbacks after specified time after adding elements",
   "main": "index.js",
   "scripts": {
