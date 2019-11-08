@@ -22,9 +22,5 @@
   "bugs": {
     "url": "https://github.com/AndrejZbin/timeout-map/issues"
   },
-  "homepage": "https://github.com/AndrejZbin/timeout-map#readme",
-  "dependencies": {
-    "n": "^6.1.0"
-  },
-  "devDependencies": {}
+  "homepage": "https://github.com/AndrejZbin/timeout-map#readme"
 }
