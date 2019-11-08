@@ -1,0 +1,26 @@
+{
+  "name": "timeout-map",
+  "version": "1.0.0",
+  "description": "Just like a normal Map, just with callbacks after specified time after adding elements",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AndrejZbin/timeout-map.git"
+  },
+  "keywords": [
+    "javascript",
+    "nodejs",
+    "npm",
+    "timeout",
+    "map"
+  ],
+  "author": "Andrej Zbín",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AndrejZbin/timeout-map/issues"
+  },
+  "homepage": "https://github.com/AndrejZbin/timeout-map#readme"
+}
